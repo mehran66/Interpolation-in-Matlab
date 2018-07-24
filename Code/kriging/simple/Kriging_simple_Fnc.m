@@ -1,0 +1,10 @@
+function [Z,D]=Kriging_simple_Fnc(Points,X,Y)
+DistanceMat=DistanceMat_Fnc(Points,X,Y);
+Semivariances=Semivariances_Fnc(DistanceMat);
+[row col]=size(DistanceMat);
+A=Semivariances(:,1:col-1);
+A=A+A';
+L=Semivariances(:,col);
+W=inv(A)*L;
+Z=W'*Points(:,4);
+D=W'*L;
